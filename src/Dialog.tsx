@@ -14,6 +14,7 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { text } from './text';
 import { getRandomIndex, getRandomItem } from './utils';
+import { Input, InputLabel } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -30,6 +31,7 @@ export default function FullScreenDialog({open, handleClose, onSuccess}: {open: 
     const [textSubset, setTextSubset] = React.useState<string>("");
     const [randomize, setRandomize] = React.useState<number>(Math.random());
     const [startTime, setStartTime] = React.useState<number>((Date.now()));
+    const [ help, setHelp ] = React.useState(false);
     React.useEffect(() => {
         const randomIndex = getRandomIndex(textArray)
         setTextSubset(textArray.slice(randomIndex, randomIndex + 2).join('. '));
@@ -66,6 +68,14 @@ export default function FullScreenDialog({open, handleClose, onSuccess}: {open: 
         <p style={{width: '300px', margin: '30px auto', fontSize: '30px'}}>
             {textSubset}
         </p>
+        {
+            !help && <div>
+                <InputLabel>Chosen Things</InputLabel>
+                <Input fullWidth/>
+                <InputLabel>Qualities</InputLabel>
+                <Input fullWidth/>
+            </div>
+        }
       </Dialog>
   );
 }
