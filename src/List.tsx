@@ -10,6 +10,7 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import { ListSubheader } from '@mui/material';
 import { $gameState } from './App';
+import { genGameKey } from './utils';
 
 export default function BasicList({setCurrentGame, setDimensions, setMode, gameState}: {gameState: $gameState, setCurrentGame: (game: [number, number])=>void, setMode: (type: "game")=>void, setDimensions: (dimensions: number) => void}) {
   return (
@@ -25,14 +26,14 @@ export default function BasicList({setCurrentGame, setDimensions, setMode, gameS
     
                 {
                     Array.from({ length: 20 }).map((_, index) => {
-                        const done = !!(gameState[dimensions] && gameState[dimensions][index]);
+                        const done = !!(gameState[genGameKey(dimensions, index)]?.averageTime);
                     return <ListItem disablePadding key={index}>
-                    <ListItemButton disabled={done} onClick={()=>{
+                    <ListItemButton onClick={()=>{
                         setDimensions(dimensions)
                         setCurrentGame([dimensions, index])
                         setMode('game');
                     }}>
-                      <ListItemText>{index + 1}{done && <DraftsIcon />}{done && `${gameState[dimensions][index].averageTime/1000}s`}</ListItemText>
+                      <ListItemText>{index + 1}{done && <DraftsIcon />}{done && `${gameState[genGameKey(dimensions, index)].averageTime}s`}</ListItemText>
                     </ListItemButton>
                   </ListItem>
         

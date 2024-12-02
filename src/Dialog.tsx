@@ -12,9 +12,9 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { text } from './text';
-import { getRandomIndex, getRandomItem } from './utils';
-import { Input, InputLabel } from '@mui/material';
+import { text, textArray } from './text';
+import { getRandomIndex, getRandomItem, questions } from './utils';
+import { Input, InputLabel, TextField } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -25,17 +25,20 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const textArray = text.split(/\. |\? /);
-
-export default function FullScreenDialog({open, handleClose, onSuccess}: {open: boolean, handleClose: () => void, onSuccess: (timeDiff: number) => void}) {
+export default function FullScreenDialog({
+    index, open, handleClose, onSuccess, options
+}: {options: {words: string, qualities: string, time: number, questionIndex: number}, index: number, open: boolean, handleClose: () => void, onSuccess: (timeDiff: number, words: string, qualities: string) => void}) {
     const [textSubset, setTextSubset] = React.useState<string>("");
     const [randomize, setRandomize] = React.useState<number>(Math.random());
     const [startTime, setStartTime] = React.useState<number>((Date.now()));
+    const [qualities, setQualities] = React.useState<string>(options.words);
+    const [words, setWords] = React.useState<string>(options.qualities);
     const [ help, setHelp ] = React.useState(false);
     React.useEffect(() => {
-        const randomIndex = getRandomIndex(textArray)
-        setTextSubset(textArray.slice(randomIndex, randomIndex + 2).join('. '));
+        setTextSubset(textArray.slice(index, index + 2).join('. '));
         setStartTime(Date.now());
+        setWords(options.words);
+        setQualities(options.qualities);
     }, [open, randomize]);
   return (
       <Dialog
@@ -57,23 +60,40 @@ export default function FullScreenDialog({open, handleClose, onSuccess}: {open: 
             <Button autoFocus color="inherit" onClick={()=>setRandomize(Math.random())}>
               Shuffle
             </Button>
-            <Button autoFocus color="inherit" onClick={()=>onSuccess(Date.now() - startTime)}>
+            <Button autoFocus color="inherit" onClick={()=>onSuccess(Date.now() - startTime, words, qualities)}>
               save
             </Button>
           </Toolbar>
         </AppBar>
+        {
+            options.time !== -1 && `Time: ${options.time / 1000}`
+        }
         <h1>
-            1st degree, 2nd degree, 2nd degree next, rhet
+            {
+                questions[options.questionIndex]
+            }
         </h1>
         <p style={{width: '300px', margin: '30px auto', fontSize: '30px'}}>
             {textSubset}
         </p>
         {
             !help && <div>
-                <InputLabel>Chosen Things</InputLabel>
-                <Input fullWidth/>
-                <InputLabel>Qualities</InputLabel>
-                <Input fullWidth/>
+                <TextField label={"Chosen things"} value={words} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setWords(event.target.value);
+            }} fullWidth/>
+                <br />
+                <br />
+                <TextField
+                    label="Qualities"
+                    multiline
+                    rows={4}
+                    value={qualities}
+                    fullWidth
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        setQualities(event.target.value);
+                      }}
+                />
+                
             </div>
         }
       </Dialog>

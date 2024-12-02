@@ -23,17 +23,27 @@ export function shuffle<T>(array: T[]): T[] {
     return array
   }
 
-
-export function getXbyX(num: number) : boolean[][] {
-    const array = [];
+export function getXbyX<T>(num: number, valGen: ()=>T) : {[key: string]: T} {
+    const doubleDic : {[key: string]: T} = {};
     
     for (let i = 0; i < num; i++) {
-        const row = [];
         for (let j = 0; j < num; j++) {
-            row.push(false);
+            doubleDic[`${i}-${j}`] = valGen();
         }
-        array.push(row);
     }
-    return array;
+    return doubleDic;
 }
 
+export function genGameKey(dim: number, index: number) {
+    return `${dim}-${index}`;
+}
+
+export const questions = [
+    "What is absurd about this?",
+    "What is a problem (and potential solution) with this?",
+    "What are the amplifiers here?",
+    "What are the verb techniques here?",
+    "What are the noun techniques here?",
+    "What are the intent techniques here?",
+    "What is the like/twist question here?",
+]
