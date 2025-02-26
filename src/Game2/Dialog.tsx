@@ -1,20 +1,16 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { text, textArray } from './text';
-import { getRandomIndex, getRandomItem, questions } from './utils';
-import { Input, InputLabel, TextField } from '@mui/material';
+import { essayTopicsArray } from '../essaytopics';
+import { questions } from './utils';
+import { TextField } from '@mui/material';
+import { dic0_1000 } from '../dictionary0-1000';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -35,7 +31,12 @@ export default function FullScreenDialog({
     const [words, setWords] = React.useState<string>(options.qualities);
     const [ help, setHelp ] = React.useState(false);
     React.useEffect(() => {
-        setTextSubset(textArray.slice(index, index + 2).join('. '));
+        if(options.questionIndex !== 2){
+            setTextSubset(essayTopicsArray[index]);
+        } else {
+            setTextSubset(`${dic0_1000[index].word}\n---------|---------\n${dic0_1000[index].definition}`);
+        }
+        
         setStartTime(Date.now());
         setWords(options.words);
         setQualities(options.qualities);

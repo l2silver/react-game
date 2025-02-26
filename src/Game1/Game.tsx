@@ -1,13 +1,13 @@
 
 
 import { useEffect, useState } from 'react';
-import { nouns } from './nouns';
+import { nouns } from '../nouns';
 import { getRandomIndex, getRandomItem, getXbyX, questions, shuffle } from './utils';
-import RadioG from './Radio';
+import RadioG from '../Radio';
 
 import FullScreenDialog from './Dialog';
-import { $board, $gameState } from './App';
-import { textArray } from './text';
+import { $board, $gameState } from './';
+import { textArray } from '../text';
 
 const dicKey = (i: number, j: number)=>`${i}-${j}`;
 

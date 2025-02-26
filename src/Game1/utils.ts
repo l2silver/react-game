@@ -39,11 +39,51 @@ export function genGameKey(dim: number, index: number) {
 }
 
 export const questions = [
-    "What is absurd about this?",
+    "What is an absurd explanation for this?",
     "What is a problem (and potential solution) with this?",
     "What are the amplifiers here?",
     "What are the verb techniques here?",
     "What are the noun techniques here?",
-    "What are the intent techniques here?",
-    "What is the like/twist question here?",
+    "What is the intention -> why -> counter point techniques here?",
+    "What are the adjective techniques here?",
+    "What is the like/hate/twist question here?",
+    "What is the therefor train here?",
+    "What is the social awareness question here?",
+    "What is the intention -> why -> counter point techniques here?",
+]
+
+export const initiators = [
+  "conversation agree/disagree",
+  "conversation clarify",
+  "conversation third thought degree",
+  "PIE",
+]
+
+export const qualities = [
+  "Who/What",
+  "image/location/time",
+]
+
+export const treaks = [
+  "Blur",
+  "Word generalize",
+]
+
+export const rhetorical = [
+  "irony:contrast",
+  "ridiculousness:misinterpret",
+  "ridiculousness:min/max",
+  "unseen:sarcasm",
+  "exagerate",
+  "distance",
+  "metaphor",
+]
+
+export const ambiguousTechnique = [
+  "negative-negative",
+  "negative-positive",
+  "negtive-quantity",
+  "association",
+  "negative-association",
+  "modifier:amount"
 ]

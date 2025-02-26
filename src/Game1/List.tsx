@@ -9,7 +9,7 @@ import Divider from '@mui/material/Divider';
 import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import { ListSubheader } from '@mui/material';
-import { $gameState } from './App';
+import { $gameState } from './';
 import { genGameKey } from './utils';
 
 export default function BasicList({setCurrentGame, setDimensions, setMode, gameState}: {gameState: $gameState, setCurrentGame: (game: [number, number])=>void, setMode: (type: "game")=>void, setDimensions: (dimensions: number) => void}) {
